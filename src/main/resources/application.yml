@@ -1,7 +1,7 @@
 server:
   port: 8080
 application:
-  home-path: /Users/user/musinsa
+  home-path: /home/app/deploy/shortening-service
 logging:
   pattern:
     console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%highlight(%-5level)] %logger[%cyan(%method:%line)] - %msg %n"
