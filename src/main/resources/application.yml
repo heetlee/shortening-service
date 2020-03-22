@@ -1,0 +1,14 @@
+server:
+  port: 8080
+application:
+  home-path: /Users/user/musinsa
+logging:
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] [%highlight(%-5level)] %logger[%cyan(%method:%line)] - %msg %n"
+  file:
+    max-history: 100
+    max-size: 100MB
+    path: ${application.home-path}/logs
+  level:
+    root: info
+    org.springframework.web.client: info
