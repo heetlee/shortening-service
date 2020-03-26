@@ -1,4 +1,4 @@
-package com.musinsa.shorten;
+package com.example.demo.shorten;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

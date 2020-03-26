@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Shortening-service</title>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body class="text-center">
+<div class="col-md-4 order-md-2 mb-4" style="margin : 100px auto; max-width : 70%">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">URL단축 서비스</span>
+        <span class="badge badge-secondary badge-pill"></span>
+    </h4>
+    <form class="card p-2 " action="#" id="form">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="URL 입력" id="url" name="url">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-secondary" id="execute">실행</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ul class="list-group">
+    <!--<li class="list-group-item">Lorem</li>-->
+</ul>
+
+<div class="modal fade" id="dialog" role="dialog" aria-labelledby="dlogLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" role="button" class="btn btn-default" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    $(document).ready(function () {
+
+      $("#execute").click(function () {
+          const url = $('#url').val();
+          const data = { url : url};
+
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/v1/shortenurl",
+            data : JSON.stringify(data),
+            success: function (data) {
+              console.log("SUCCESS : ", data);
+              var code = data.response_code;
+              var message = data.response_message;
+              if(code != 0){    // status 200 이지만 app error code 발생
+                $(".modal-body").text(message);
+                $("#dialog").modal();
+              }else{
+                if(data.response_data.redirectView){    // 단축 URL 호출로 리다이렉트 이벤트 발생
+                  window.location.href = data.response_data.url;
+                }else{
+                  $(".badge").text(data.response_data.call_count);
+                  if(1 == data.response_data.call_count){
+                    $(".modal-body").html(data.request_data.url + '<br>단축 URL<br>' + data.response_data.shortening_url);
+                    $("#dialog").modal();
+                  }
+                }
+              }
+            },
+            error: function (e) {
+              console.log("ERROR : ", e);
+              alert('Server Error');
+            }
+          });
+       });
+    });
+
+    /*]]>*/
+</script>
+</body>
+</html>

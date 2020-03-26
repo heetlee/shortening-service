@@ -1,4 +1,4 @@
-package com.musinsa.shorten;
+package com.example.demo.shorten;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

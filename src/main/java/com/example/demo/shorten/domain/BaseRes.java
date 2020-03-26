@@ -1,12 +1,8 @@
-package com.musinsa.shorten.domain;
+package com.example.demo.shorten.domain;
 
+import com.example.demo.shorten.common.BaseResCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.musinsa.shorten.common.BaseResCode;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Getter

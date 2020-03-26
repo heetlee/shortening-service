@@ -1,19 +1,10 @@
-package com.musinsa.shorten;
+package com.example.demo.shorten;
 
+import com.example.demo.shorten.config.ServiceProperties;
+import com.example.demo.shorten.domain.QueryReq;
+import com.example.demo.shorten.service.ShorteningService;
 import com.google.common.collect.ImmutableList;
-import com.musinsa.shorten.config.ServiceProperties;
-import com.musinsa.shorten.domain.QueryReq;
-import com.musinsa.shorten.domain.vo.ShorteningUrl;
-import com.musinsa.shorten.service.ShorteningService;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
@@ -21,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @ExtendWith(SpringExtension.class)
 @SpringJUnitConfig(classes = ShorteningApplicationTest.InnerConfiguration.class, initializers = ConfigFileApplicationContextInitializer.class)
@@ -46,8 +40,7 @@ class ShorteningApplicationTest {
   @Order(1)
   @DisplayName("shorteningUrl 요청시 리다이렉트 체크")
   public void redirectTest() {
-    ShorteningUrl shorteningUrl = shorteningService.getShorteningUrl(redomQuery());
-    QueryReq.SearchShortenUrl  searchShortenUrl = new QueryReq.SearchShortenUrl();
+    QueryReq.SearchShortenUrl searchShortenUrl = new QueryReq.SearchShortenUrl();
     searchShortenUrl.setUrl(shorteningService.getShorteningUrl(redomQuery()).getShorteningUrl());
     Assertions.assertEquals(shorteningService.shorteningUrl(QueryReq.from(searchShortenUrl)).getClass(), RedirectView.class);
   }

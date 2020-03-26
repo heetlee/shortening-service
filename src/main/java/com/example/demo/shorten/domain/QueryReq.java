@@ -1,13 +1,11 @@
-package com.musinsa.shorten.domain;
+package com.example.demo.shorten.domain;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -23,7 +21,9 @@ public class QueryReq {
     @Getter @Setter @ToString
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class SearchShortenUrl implements BaseReq {
-        @NotNull @Size(min = 1, message = "url must not be null" )
+        @NotNull
+        @Size(min = 1, message = "url 형식만 지원 합니다.")
+        @URL( message = "url 형식만 지원 합니다." )
         String url;
     }
 

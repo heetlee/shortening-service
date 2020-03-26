@@ -1,32 +1,30 @@
-package com.musinsa.shorten.controller;
+package com.example.demo.shorten.controller;
 
-import com.musinsa.shorten.domain.QueryReq;
-import com.musinsa.shorten.service.ShorteningService;
-import javax.validation.Valid;
+import com.example.demo.shorten.domain.BaseRes;
+import com.example.demo.shorten.domain.QueryReq;
+import com.example.demo.shorten.service.ShorteningService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ShorteningController {
+public class ShorteningRestController {
 
   private ShorteningService shorteningService;
 
   @PostMapping("/v1/shortenurl")
-  public Object shorteningUrl(
+  public BaseRes shorteningUrl(
       @RequestBody @Valid QueryReq.SearchShortenUrl request ) {
 
-    return shorteningService.shorteningUrl(QueryReq.from(request));
+    return BaseRes.success(shorteningService.shorteningUrl(QueryReq.from(request)), request);
   }
 
   @GetMapping("/healthcheck/_check")

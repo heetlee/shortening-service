@@ -1,4 +1,4 @@
-package com.musinsa.shorten.config;
+package com.example.demo.shorten.config;
 
 import lombok.AccessLevel;
 import lombok.Getter;

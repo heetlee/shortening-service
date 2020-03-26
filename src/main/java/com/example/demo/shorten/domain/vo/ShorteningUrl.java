@@ -1,4 +1,4 @@
-package com.musinsa.shorten.domain.vo;
+package com.example.demo.shorten.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

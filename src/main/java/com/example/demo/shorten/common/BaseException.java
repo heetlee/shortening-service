@@ -1,4 +1,4 @@
-package com.musinsa.shorten.common;
+package com.example.demo.shorten.common;
 
 public class BaseException extends RuntimeException {
 

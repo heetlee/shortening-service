@@ -1,7 +1,5 @@
-package com.musinsa.shorten.common;
+package com.example.demo.shorten.common;
 
-import com.google.common.collect.ImmutableSet;
-import java.util.Set;
 import org.springframework.http.HttpStatus;
 
 public enum BaseResCode {
@@ -30,10 +28,4 @@ public enum BaseResCode {
 		return this.reason;
 	}
 
-	private static final Set<BaseResCode> errors = ImmutableSet.of(
-			BaseResCode.INTERNAL_SERVER_ERROR, BaseResCode.STS_EXCEPTION);
-
-	public static boolean oneOfServerSideError(BaseResCode code) {
-		return errors.contains(code);
-	}
 }

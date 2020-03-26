@@ -1,15 +1,14 @@
-package com.musinsa.shorten.service;
+package com.example.demo.shorten.service;
 
-import com.musinsa.shorten.domain.BaseRes;
-import com.musinsa.shorten.domain.QueryReq;
-import com.musinsa.shorten.domain.vo.ShorteningUrl;
-import java.util.Date;
-import java.util.HashMap;
+import com.example.demo.shorten.domain.QueryReq;
+import com.example.demo.shorten.domain.vo.ShorteningUrl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -22,20 +21,12 @@ public class ShorteningService {
   public Object shorteningUrl(final QueryReq request) {
     log.info("url = " + request.getUrl());
 
-    String url = request.getUrl().substring(
-        request.getUrl().lastIndexOf('/') > -1 ? request.getUrl().lastIndexOf('/') + 1 : 0,
-        request.getUrl().length());
-    return shorteningUrlMap.containsKey(url) ? redirectUrl(shorteningUrlMap.get(url)) : getShorteningUrl(request);
+    String url = request.getUrl().substring(request.getUrl().lastIndexOf('/') + 1);
+    return shorteningUrlMap.containsKey(url) ? redirectUrl(shorteningUrlMap.get(url)) : getShorteningUrl(request.getUrl());
   }
 
   private RedirectView redirectUrl(final String originUrl) {
-
     return new RedirectView(originUrl);
-  }
-
-  private BaseRes getShorteningUrl(final QueryReq request) {
-
-    return BaseRes.success(getShorteningUrl(request.getUrl()), request);
   }
 
   public ShorteningUrl getShorteningUrl(final String url){
@@ -45,7 +36,7 @@ public class ShorteningService {
       shorteningUrl = originUrlMap.get(hashCode);
       shorteningUrl.setCallCount(shorteningUrl.getCallCount() + 1);
     } else {  // case 2. 최초 호출
-      String shortenUrl = Long.toString(new Date().getTime(), 36);
+      String shortenUrl = Long.toString(System.currentTimeMillis(), 36);
       shorteningUrl = new ShorteningUrl("http://localhost:8080/" + shortenUrl, 1);
       originUrlMap.put(hashCode, shorteningUrl);
       shorteningUrlMap.put(shortenUrl, url);
