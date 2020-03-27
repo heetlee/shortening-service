@@ -2,29 +2,36 @@ package com.example.demo.shorten;
 
 import com.example.demo.shorten.config.ServiceProperties;
 import com.example.demo.shorten.domain.QueryReq;
+import com.example.demo.shorten.domain.vo.ShorteningUrl;
 import com.example.demo.shorten.service.ShorteningService;
 import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ExtendWith(SpringExtension.class)
 @SpringJUnitConfig(classes = ShorteningApplicationTest.InnerConfiguration.class, initializers = ConfigFileApplicationContextInitializer.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest(classes = ShorteningService.class)
 class ShorteningApplicationTest {
 
+  @Autowired
   private ShorteningService shorteningService;
+
   @BeforeEach
   void createAutoCompletionService() {
-    shorteningService = new ShorteningService();
+    shorteningService = new ShorteningService(new HashMap<String, String>(), new HashMap<Integer, ShorteningUrl>());
   }
 
   @Test

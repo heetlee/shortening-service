@@ -15,8 +15,8 @@ import java.util.HashMap;
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class ShorteningService {
 
-  private static HashMap<String, String> shorteningUrlMap = new HashMap<>();
-  private static HashMap<Integer, ShorteningUrl> originUrlMap = new HashMap<>();
+  private final HashMap<String, String> shorteningUrlMap;
+  private final HashMap<Integer, ShorteningUrl> originUrlMap;
 
   public Object shorteningUrl(final QueryReq request) {
     log.info("url = " + request.getUrl());
